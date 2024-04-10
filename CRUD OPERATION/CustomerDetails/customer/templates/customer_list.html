@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+             <th>No.</th>
+            <th>Customer Name</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Product Name</th>
+            <th>
+              <a href="{% url 'customer_form' %}" class="btn btn-outline-success">
+                <i class="fas fa-plus">Add New</i>
+            </a>
+            </th>
+            
+    </thead>
+    <tbody>
+        {% for customer in customer_list  %}
+          <tr>
+            <td>{{customer.id}}</td>
+            <td>{{customer.name}}</td>
+            <td>{{customer.mobile}}</td>
+            <td>{{customer.address}}</td>
+            <td>{{customer.product_name}}</td>
+            <td>
+              <a href="{% url 'customer_update' customer.id %}" class="btn text-secondary px-0">
+                <i class="far fa-edit fa-lg"></i>
+            </a>
+            <form action="{% url 'customer_delete' customer.id %}" method="post" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn">
+                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+            </button>
+            </form>
+            </td>
+          </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+
+{% endblock content %}
